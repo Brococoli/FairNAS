@@ -130,6 +130,7 @@ class SinglePathOneShot(Model):
             kernel_size=3, 
             strides=2,
             use_bias=False, 
+            padding='SAME', 
             kernel_initializer=initializer, 
             kernel_regularizer=tf.keras.regularizers.l2(weight_decay),
             ),

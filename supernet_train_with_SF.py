@@ -28,8 +28,7 @@ class Trainer(object):
 
 
     def lr_plan(self, epoch):
-        return 
-        plan = [1e-3, 1e-4]
+        plan = [1e-3, 1e-4, 1e-5]
         lr = plan[min(len(plan)-1, epoch//45)]
         print('learning rate:', lr)
         tf.keras.backend.set_value(self.optimizer.lr, lr)
@@ -45,7 +44,7 @@ class Trainer(object):
                 loss = self.loss_func(y_true = labels, y_pred = logits)
                 loss += sum(self.model.losses)
                 losses.append(loss)
-                break
+
         #pdb.set_trace()
         grads = g.gradient(losses, self.model.trainable_variables)
         self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
@@ -143,15 +142,9 @@ def train():
 
     data = get_cifar10()
     
-    data['train_ds'] = data['train_ds'].take(1000)
-    data['train_num'] = 1000
-    data['val_ds'] = data['val_ds'].take(1000)
-    data['val_num'] = 1000
-    
-
     #opt = tf.keras.optimizers.SGD(learning_rate=0.002, momentum=0.9, nesterov=True)
     opt = tf.keras.optimizers.Adam(learning_rate=0.001)
-    trainer = Trainer(model, data, optimizer=opt, flops_constant=100)
+    trainer = Trainer(model, data, optimizer=opt, flops_constant=100, params_constant=math.inf, )
     logging.debug('get a trainer')
 
 
