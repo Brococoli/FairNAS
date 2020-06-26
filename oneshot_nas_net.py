@@ -128,9 +128,10 @@ class SinglePathOneShot(Model):
 
         self.stem = tf.keras.Sequential([layers.Conv2D(32, 
             kernel_size=3, 
-            strides=2,
+            strides=1,
             use_bias=False, 
             kernel_initializer=initializer, 
+            padding='SAME', 
             kernel_regularizer=tf.keras.regularizers.l2(weight_decay),
             ),
             SuperBatchNormalization(32, momentum=0.9, epsilon=1e-5,),

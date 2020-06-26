@@ -45,7 +45,7 @@ class Trainer(object):
                 loss = self.loss_func(y_true = labels, y_pred = logits)
                 loss += sum(self.model.losses)
                 losses.append(loss)
-                break
+
         #pdb.set_trace()
         grads = g.gradient(losses, self.model.trainable_variables)
         self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
